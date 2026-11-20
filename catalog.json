@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "repository": "edu-microtasks",
+  "license": "MIT / CC-BY-4.0",
+  "updated_at": "2026-11-20",
+  "tasks": [
+    {
+      "id": "yrittajyys-investointi-takaisinmaksuaika",
+      "title": "Investointilaskenta ja takaisinmaksuaika",
+      "summary": "2-välilehtinen simulaattori ja sokraattinen haastekoe investoinnin takaisinmaksuajan, pitoajan ja kassavirran arviointiin.",
+      "education_levels": ["toinen_aste_pt", "at_eat", "amk"],
+      "subjects": ["yrittajyys", "liiketoiminta", "alkutuotanto"],
+      "difficulty_levels": ["T1", "H3", "K5"],
+      "presets": ["maatila", "kahvila"],
+      "s2_languages": ["en", "sv", "uk", "et", "ar", "so"],
+      "manifest_path": "tasks/yrittajyys-investointi-takaisinmaksuaika/manifest.json",
+      "widget_path": "tasks/yrittajyys-investointi-takaisinmaksuaika/widget.html"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "en": {
+    "label": "Englanti (English)",
+    "dir": "ltr",
+    "terms": {
+      "cost": "Initial investment (CapEx)",
+      "saving": "Annual gross benefit / savings",
+      "opex": "Annual operating & maintenance costs",
+      "years": "Useful life (years)",
+      "payback": "Payback period",
+      "net": "Net annual cash flow",
+      "total": "Total net gain",
+      "status": "Recommendation",
+      "chart": "Cumulative cash flow over useful life"
+    }
+  },
+  "sv": {
+    "label": "Ruotsi (Svenska)",
+    "dir": "ltr",
+    "terms": {
+      "cost": "Anskaffningskostnad",
+      "saving": "Årlig besparing / merintäkt",
+      "opex": "Årliga drifts- och underhållskostnader",
+      "years": "Ekonomisk livslängd (år)",
+      "payback": "Återbetalningstid",
+      "net": "Årligt nettokassaflöde",
+      "total": "Total nettovinst",
+      "status": "Rekommendation",
+      "chart": "Ackumulerat kassaflöde under livslängden"
+    }
+  },
+  "uk": {
+    "label": "Ukraina (Українська)",
+    "dir": "ltr",
+    "terms": {
+      "cost": "Початкові інвестиції",
+      "saving": "Річна економія / дохід",
+      "opex": "Річні витрати на обслуговування",
+      "years": "Строк корисного використання (роки)",
+      "payback": "Термін окупності",
+      "net": "Чистий річний грошовий потік",
+      "total": "Загальний чистий прибуток",
+      "status": "Рекомендація",
+      "chart": "Накопичений грошовий потік"
+    }
+  },
+  "et": {
+    "label": "Viro (Eesti)",
+    "dir": "ltr",
+    "terms": {
+      "cost": "Soetusmaksumus",
+      "saving": "Aastane sääst / lisatulu",
+      "opex": "Aastased kasutus- ja hoolduskulud",
+      "years": "Kasutusiga (aastat)",
+      "payback": "Tasuvusaeg",
+      "net": "Aastane netorahavoog",
+      "total": "Kogu netokasum",
+      "status": "Soovitus",
+      "chart": "Kumulatiivne rahavoog kasutusaja jooksul"
+    }
+  },
+  "ar": {
+    "label": "Arabia (العربية – RTL)",
+    "dir": "rtl",
+    "terms": {
+      "cost": "تكلفة الاستثمار الأولية",
+      "saving": "الوفورات أو الإيرادات السنوية",
+      "opex": "تكاليف التشغيل والصيانة السنوية",
+      "years": "العمر الإنتاجي (سنوات)",
+      "payback": "فترة الاسترداد",
+      "net": "صافي التدفق النقدي السنوي",
+      "total": "إجمالي صافي الربح",
+      "status": "التوصية",
+      "chart": "التدفق النقدي التراكمي"
+    }
+  },
+  "so": {
+    "label": "Somali (Soomaali)",
+    "dir": "ltr",
+    "terms": {
+      "cost": "Qiimaha maalgashiga bilowga ah",
+      "saving": "Kaydka ama dakhliga sanadlaha ah",
+      "opex": "Kharashka dayactirka sanadlaha ah",
+      "years": "Mudada isticmaalka (sano)",
+      "payback": "Mudada soo celinta maalgashiga",
+      "net": "Dakhliga saafiga ah sanadkii",
+      "total": "Faa'iidada saafiga ah ee guud",
+      "status": "Talo-bixin",
+      "chart": "Qulqulka lacagta ee mudada isticmaalka"
+    }
+  }
+}

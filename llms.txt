@@ -1,0 +1,20 @@
+# Avoin mikrotehtäväkirjasto (Open Educational Microtasks)
+
+> Maksuton, avoimen lähdekoodin mikrotehtäväkirjasto suomalaiseen koulutukseen (toinen aste, AMK, aikuiskoulutus).
+> Kaikki tehtävät toimivat staattisesti selaimessa ilman kirjautumista tai henkilötietojen keräämistä (Zero PII).
+
+## Lisenssi
+- Koodi: MIT
+- Sisältöpohjat ja tehtävät: CC BY 4.0
+- Metatiedot: CC0
+
+## Koneellisesti luettava luettelo agenteille
+- [catalog.json](./catalog.json): Sisältää kaikki julkaistut mikrotehtävät, oppiasteet, aiheet, vaikeustasot (T1–K5), skenaariot (presets) ja S2-tukikielet.
+
+## Käyttö URL-parametreilla
+Mikä tahansa tehtävä voidaan avata tai upottaa `<iframe>`-elementillä suoraan halutulla toimialalla ja S2-kielellä:
+- `?preset=<skenaario>` (esim. `maatila`, `kahvila`)
+- `?s2=<kielikoodi>` (esim. `en`, `sv`, `uk`, `et`, `ar`, `so`)
+
+Esimerkki:
+`tasks/yrittajyys-investointi-takaisinmaksuaika/widget.html?preset=maatila&s2=uk`

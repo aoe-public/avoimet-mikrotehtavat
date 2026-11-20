@@ -1,0 +1,35 @@
+{
+  "id": "yrittajyys-investointi-takaisinmaksuaika",
+  "version": "1.0.0",
+  "title": "Investointilaskenta ja takaisinmaksuaika",
+  "summary": "2-välilehtinen simulaattori ja sokraattinen haastekoe investoinnin kannattavuuden, pitoajan ja kassavirran arviointiin.",
+  "license": "CC-BY-4.0",
+  "code_license": "MIT",
+  "education_levels": ["toinen_aste_pt", "at_eat", "amk"],
+  "subjects": ["yrittajyys", "liiketoiminta", "alkutuotanto"],
+  "eperusteet_refs": [
+    "Liiketoiminnan perustutkinto: Tuloksellinen toiminta (20 osp)",
+    "Liiketoiminnan perustutkinto: Yritystoiminnan suunnittelu (15 osp)",
+    "Yrittäjyyden ammattitutkinto: Yritystoiminnan analysointi ja kehittäminen"
+  ],
+  "aoe_keywords": [
+    "investointilaskenta",
+    "takaisinmaksuaika",
+    "kassavirta",
+    "yrittäjyys",
+    "alkutuotanto",
+    "S2"
+  ],
+  "difficulty_levels": ["T1", "H3", "K5"],
+  "s2_i18n_file": "./i18n/s2_bundle.json",
+  "s2_rtl_supported": true,
+  "accessibility": "WCAG 2.1 AA",
+  "gdpr_collects_pii": false,
+  "parameters": {
+    "cost_eur": { "min": 5000, "max": 120000, "step": 1000, "default": 45000 },
+    "annual_benefit_eur": { "min": 2000, "max": 30000, "step": 500, "default": 12000 },
+    "annual_opex_eur": { "min": 0, "max": 15000, "step": 200, "default": 3000 },
+    "useful_life_years": { "min": 3, "max": 15, "step": 1, "default": 8 }
+  },
+  "presets": ["maatila", "kahvila"]
+}

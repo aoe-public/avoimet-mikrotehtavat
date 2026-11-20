@@ -1,0 +1,41 @@
+{
+  "id": "maatila",
+  "name": "Maatila (ruoan alkutuotanto)",
+  "subtitle": "Vertaile oman koneen tai energiainvestoinnin kannattavuutta suhteessa urakointiin ja pitoaikaan.",
+  "alternative_label": "Suosi urakointia",
+  "items": [
+    { "name": "Käytetty puimuri", "cost": 45000, "saving": 12000, "opex": 3000, "years": 8 },
+    { "name": "Kylvölannoitin", "cost": 28000, "saving": 9500, "opex": 1500, "years": 10 },
+    { "name": "Aurinkovoimala", "cost": 24000, "saving": 4800, "opex": 400, "years": 15 },
+    { "name": "Kuivurin uusinta", "cost": 65000, "saving": 11000, "opex": 3500, "years": 7 }
+  ],
+  "questions": [
+    {
+      "q": "Tila harkitsee 36 000 € kylvölannoitinta. Se säästää urakointikuluja 10 000 € vuodessa, mutta huolto ja vakuutus maksavat 1 000 € vuodessa. Mikä on investoinnin takaisinmaksuaika?",
+      "options": [
+        { "text": "3,6 vuotta", "correct": false, "hint": "Hyvä alku! Jaoit hankintahinnan suoraan bruttosäästöllä (36 000 / 10 000). Muista vähentää ensin vuotuiset huolto- ja vakuutuskulut (1 000 €), jotta saat todellisen nettotuoton." },
+        { "text": "4,0 vuotta", "correct": true, "hint": "Oikein! Vuotuinen nettotuotto on 10 000 € - 1 000 € = 9 000 €. Kun 36 000 € jaetaan 9 000 €:lla, takaisinmaksuaika on tasan 4,0 vuotta." },
+        { "text": "5,0 vuotta", "correct": false, "hint": "Lasketaan yhdessä: paljonko tilalle jää nettona vuodessa, kun 10 000 € säästöstä vähennetään 1 000 € käyttökulut? Jaa sitten 36 000 € sillä luvulla." },
+        { "text": "9,0 vuotta", "correct": false, "hint": "9 000 € on vuotuinen nettotuotto euroina, ei takaisinmaksuaika vuosina. Kuinka monta 9 000 €:n vuotta tarvitaan 36 000 €:n hankintahinnan kattamiseen?" }
+      ]
+    },
+    {
+      "q": "Käytetty puimuri maksaa 50 000 € ja sen vuotuinen nettotuotto on 8 000 €. Koneen arvioitu pitoaika ennen kallista remonttia on 5 vuotta. Kumpi on taloudellisesti viisaampaa?",
+      "options": [
+        { "text": "Ostaa puimuri, koska 8 000 € vuodessa on selvä plussa", "correct": false, "hint": "Vuotuinen nettotuotto on positiivinen, mutta ehtiikö se kattaa 50 000 € hankintahinnan 5 vuodessa? Laske 5 × 8 000 € ja vertaa hankintahintaan." },
+        { "text": "Jatkaa urakointia, koska takaisinmaksuaika (6,25 v) ylittää 5 vuoden pitoajan", "correct": true, "hint": "Juuri näin! 50 000 € / 8 000 € = 6,25 vuotta. Viidessä vuodessa kertyisi vain 40 000 €, joten investointi jäisi 10 000 € tappiolle ilman suurta jäännösarvoa." },
+        { "text": "Ostaa puimuri vain, jos huoltokulut lasketaan nollaksi", "correct": false, "hint": "Käytetyn puimurin huoltokuluja ei voi olettaa nollaksi. Vertaa annettua nettotuottoa (8 000 €/v) ja 5 vuoden pitoaikaa hankintahintaan." },
+        { "text": "Pitoajalla ei ole merkitystä takaisinmaksuaikalaskennassa", "correct": false, "hint": "Pitoaika on ratkaiseva vertailukohta: jos kone kuluu loppuun ennen kuin se on maksanut itsensä takaisin, investointi syö tilan pääomaa." }
+      ]
+    },
+    {
+      "q": "Navetan aurinkovoimalan takaisinmaksuaika on 5,5 vuotta ja käyttöikä 20 vuotta. Miksi maatilayrittäjän pitää silti tarkistaa kassavirta ennen tilausta?",
+      "options": [
+        { "text": "Sillä ei ole väliä, jos 20 vuoden kokonaistuotto on positiivinen", "correct": false, "hint": "Pitkän aikavälin kannattavuus on tärkeää, mutta maatilalla kevään siemen- ja lannoiteostot on maksettava heti. Mitä tapahtuu, jos kassa tyhjenee jo 1. vuonna?" },
+        { "text": "Hankinta sitoo kassaa tai vaatii lainanhoitoa heti, vaikka säästöt kertyvät vasta vuosien aikana", "correct": true, "hint": "Täysin oikein! Kannattavakin investointi voi ajaa tilan maksuvalmiuskriisiin, jos rahoitusta ja kevään panoshankintojen kassatarvetta ei soviteta yhteen." },
+        { "text": "Koska takaisinmaksuaika ei koskaan saa ylittää 3 vuotta maataloudessa", "correct": false, "hint": "Maatalouden pitkäaikaisissa investoinneissa 5–8 vuoden takaisinmaksuaika on usein hyvä. Ratkaisevaa on maksuvalmiuden riittävyys matkan varrella." },
+        { "text": "Koska aurinkovoimalassa ei ole kiinteää hankintahintaa", "correct": false, "hint": "Juuri päinvastoin: aurinkovoimala on etupainotteinen investointi, jossa lähes koko kustannus maksetaan alussa ja hyöty kertyy hitaasti." }
+      ]
+    }
+  ]
+}

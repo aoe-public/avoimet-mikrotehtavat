@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Investointilaskenta ja takaisinmaksuaika – Avoin mikrotehtävä</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #cbd5e1;
+      --text: #0f172a;
+      --muted: #475569;
+      --primary: #1e4d3b;
+      --primary-hover: #163a2c;
+      --primary-text: #ffffff;
+      --success: #166534;
+      --success-bg: #f0fdf4;
+      --warning: #92400e;
+      --warning-bg: #fffbeb;
+      --error: #991b1b;
+      --error-bg: #fef2f2;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 16px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: var(--text);
+    }
+    .subtitle {
+      margin: 4px 0 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .controls-right {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    select {
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
+      color: var(--text);
+      font-size: 0.82rem;
+    }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin: 14px 0;
+    }
+    .tab-btn {
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--primary-text);
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 10px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+    }
+    .preset-btn {
+      text-align: left;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      cursor: pointer;
+    }
+    .preset-btn.active {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary);
+      background: var(--success-bg);
+    }
+    .preset-name { font-weight: 600; font-size: 0.88rem; }
+    .preset-meta { font-size: 0.8rem; color: var(--muted); }
+    .panel-box {
+      margin-top: 12px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+    }
+    .slider-row label {
+      display: block;
+      font-size: 0.84rem;
+    }
+    .slider-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-variant-numeric: tabular-nums;
+    }
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+    .s2-sub {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .s2-sub:empty { display: none; }
+    .kpi-card {
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card);
+    }
+    .kpi-label { font-size: 0.8rem; color: var(--muted); }
+    .kpi-val { font-size: 1.15rem; font-weight: 700; margin-top: 4px; }
+    .bars-wrap {
+      display: grid;
+      align-items: end;
+      gap: 6px;
+      height: 130px;
+      margin-top: 10px;
+      padding-top: 8px;
+    }
+    .bar-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      height: 100%;
+      gap: 4px;
+    }
+    .bar-track {
+      width: 100%;
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+    }
+    .bar-fill {
+      width: 100%;
+      border-radius: 3px 3px 0 0;
+      transition: height 0.15s ease;
+    }
+    .bar-lbl { font-size: 0.75rem; color: var(--muted); }
+    .legend {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .opt-btn {
+      padding: 10px 12px;
+      text-align: left;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    .opt-btn:hover { border-color: var(--primary); }
+    .opt-btn.correct { border-color: var(--success); background: var(--success-bg); font-weight: 600; }
+    .opt-btn.wrong { border-color: var(--warning); background: var(--warning-bg); }
+    .feedback {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      font-size: 0.84rem;
+    }
+    .nav-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 12px;
+    }
+    .btn {
+      padding: 7px 14px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.83rem;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--primary-text);
+    }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .complete-box {
+      margin-top: 12px;
+      padding: 14px;
+      border: 1px solid var(--success);
+      border-radius: 8px;
+      background: var(--success-bg);
+      color: var(--success);
+    }
+    .hidden { display: none; }
+    footer {
+      margin-top: 16px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="topbar">
+      <div>
+        <h1>Investointilaskenta ja takaisinmaksuaika</h1>
+        <p id="scenario-subtitle" class="subtitle"></p>
+      </div>
+      <div class="controls-right">
+        <label>
+          <span class="sr-only">Skenaario</span>
+          <select id="preset-select" aria-label="Valitse toimialaskenaario" onchange="loadPreset(this.value)">
+            <option value="maatila">Skenaario: Maatila</option>
+            <option value="kahvila">Skenaario: Kahvila-leipomo</option>
+          </select>
+        </label>
+        <label>
+          <span class="sr-only">S2-kielituki</span>
+          <select id="s2-select" aria-label="Valitse S2-tukikieli" onchange="setS2Lang(this.value)">
+            <option value="">S2-tukikieli: Pois</option>
+            <option value="en">S2: Englanti (English)</option>
+            <option value="sv">S2: Ruotsi (Svenska)</option>
+            <option value="uk">S2: Ukraina (Українська)</option>
+            <option value="et">S2: Viro (Eesti)</option>
+            <option value="ar">S2: Arabia (العربية – RTL)</option>
+            <option value="so">S2: Somali (Soomaali)</option>
+          </select>
+        </label>
+      </div>
+    </header>
+
+    <div class="tabs" role="tablist" aria-label="Mikrotehtävän välilehdet">
+      <button id="tab-sim" class="tab-btn active" role="tab" aria-selected="true" onclick="switchTab('sim')">
+        1. Visuaalinen simulaattori
+      </button>
+      <button id="tab-quiz" class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('quiz')">
+        2. Sokraattinen haastekoe (<span id="quiz-badge">0/3</span>)
+      </button>
+    </div>
+
+    <!-- VÄLILEHTI 1: SIMULAATTORI -->
+    <section id="panel-sim">
+      <div id="preset-buttons" class="grid-4"></div>
+
+      <div class="panel-box grid-2">
+        <div class="slider-row">
+          <label for="in-cost">
+            <div class="slider-head">
+              <span><strong>Hankintahinta</strong><span class="s2-sub" data-s2="cost"></span></span>
+              <span id="val-cost" class="mono">45 000 €</span>
+            </div>
+            <input id="in-cost" type="range" min="5000" max="120000" step="1000" value="45000" oninput="updateSim()" />
+          </label>
+        </div>
+
+        <div class="slider-row">
+          <label for="in-saving">
+            <div class="slider-head">
+              <span><strong>Säästö / lisätuotto / v</strong><span class="s2-sub" data-s2="saving"></span></span>
+              <span id="val-saving" class="mono">12 000 €</span>
+            </div>
+            <input id="in-saving" type="range" min="2000" max="30000" step="500" value="12000" oninput="updateSim()" />
+          </label>
+        </div>
+
+        <div class="slider-row">
+          <label for="in-opex">
+            <div class="slider-head">
+              <span><strong>Käyttö- ja huoltokulut / v</strong><span class="s2-sub" data-s2="opex"></span></span>
+              <span id="val-opex" class="mono">3 000 €</span>
+            </div>
+            <input id="in-opex" type="range" min="0" max="15000" step="200" value="3000" oninput="updateSim()" />
+          </label>
+        </div>
+
+        <div class="slider-row">
+          <label for="in-years">
+            <div class="slider-head">
+              <span><strong>Pitoaika (vuotta)</strong><span class="s2-sub" data-s2="years"></span></span>
+              <span id="val-years" class="mono">8 v</span>
+            </div>
+            <input id="in-years" type="range" min="3" max="15" step="1" value="8" oninput="updateSim()" />
+          </label>
+        </div>
+      </div>
+
+      <!-- 4 Mittarikorttia -->
+      <div class="grid-4" style="margin-top: 12px;">
+        <div class="kpi-card">
+          <div class="kpi-label">Takaisinmaksuaika<span class="s2-sub" data-s2="payback"></span></div>
+          <div id="kpi-payback" class="kpi-val mono">5,0 v</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Nettotuotto / v<span class="s2-sub" data-s2="net"></span></div>
+          <div id="kpi-net" class="kpi-val mono">+9 000 €</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Kokonaisnetto<span class="s2-sub" data-s2="total"></span></div>
+          <div id="kpi-total" class="kpi-val mono">+27 000 €</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Päätössuositus<span class="s2-sub" data-s2="status"></span></div>
+          <div id="kpi-status" class="kpi-val" style="font-size: 0.95rem;">Kannattava hankinta</div>
+        </div>
+      </div>
+
+      <!-- Kumulatiivinen kassavirta -->
+      <div class="panel-box">
+        <div class="slider-head">
+          <span><strong>Kumulatiivinen kassavirta pitoaikana</strong><span class="s2-sub" data-s2="chart"></span></span>
+          <span id="chart-caption" class="mono" style="font-size: 0.82rem; color: var(--muted);"></span>
+        </div>
+        <div id="bars" class="bars-wrap"></div>
+        <div class="legend">
+          <span>Punainen palkki = hankintahintaa vielä maksamatta</span>
+          <span>Vihreä palkki = investointi maksanut itsensä takaisin</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- VÄLILEHTI 2: SOKRAATTINEN HAASTEKOE -->
+    <section id="panel-quiz" class="hidden">
+      <div class="panel-box">
+        <div id="quiz-step" style="font-size: 0.82rem; color: var(--muted); font-weight: 600;">Haaste 1 / 3</div>
+        <p id="quiz-q" style="font-weight: 600; margin: 8px 0 12px;"></p>
+        <div id="quiz-opts" class="grid-2"></div>
+        <div id="quiz-fb" class="feedback hidden"></div>
+        <div class="nav-row">
+          <button id="btn-prev" class="btn" onclick="moveQuiz(-1)">Edellinen</button>
+          <button id="btn-next" class="btn btn-primary" onclick="moveQuiz(1)">Seuraava haaste</button>
+        </div>
+      </div>
+
+      <div id="quiz-done" class="complete-box hidden">
+        <strong>Suoritusmerkintä: Investointilaskenta hallussa (3/3)</strong>
+        <p style="margin: 6px 0 0; font-size: 0.84rem; color: var(--text);">
+          Osaat laskea investoinnin vuotuisen nettotuoton ja takaisinmaksuajan, verrata sitä pitoaikaan ja arvioida kassavirtavaikutusta.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <span>Avoin mikrotehtäväkirjasto (pilotti) · Ei kerää henkilötietoja (Zero PII)</span>
+      <span>Lisenssi: CC BY 4.0 / Koodi: MIT · WCAG 2.1 AA</span>
+    </footer>
+  </main>
+
+  <script>
+    // Sisäänrakennetut skenaariot ja S2-sanasto offline-/file://-käyttöä varten
+    // HTTP-palvelimella widget yrittää ladata ajantasaiset presets/*.json ja i18n/s2_bundle.json
+    const BUILTIN_PRESETS = {
+      maatila: {
+        id: 'maatila',
+        name: 'Maatila (ruoan alkutuotanto)',
+        subtitle: 'Vertaile oman koneen tai energiainvestoinnin kannattavuutta suhteessa urakointiin ja pitoaikaan.',
+        alternative_label: 'Suosi urakointia',
+        items: [
+          { name: 'Käytetty puimuri', cost: 45000, saving: 12000, opex: 3000, years: 8 },
+          { name: 'Kylvölannoitin', cost: 28000, saving: 9500, opex: 1500, years: 10 },
+          { name: 'Aurinkovoimala', cost: 24000, saving: 4800, opex: 400, years: 15 },
+          { name: 'Kuivurin uusinta', cost: 65000, saving: 11000, opex: 3500, years: 7 }
+        ],
+        questions: [
+          {
+            q: 'Tila harkitsee 36 000 € kylvölannoitinta. Se säästää urakointikuluja 10 000 € vuodessa, mutta huolto ja vakuutus maksavat 1 000 € vuodessa. Mikä on investoinnin takaisinmaksuaika?',
+            options: [
+              { text: '3,6 vuotta', correct: false, hint: 'Hyvä alku! Jaoit hankintahinnan suoraan bruttosäästöllä (36 000 / 10 000). Vähennä ensin vuotuiset huolto- ja vakuutuskulut (1 000 €), jotta saat nettotuoton.' },
+              { text: '4,0 vuotta', correct: true, hint: 'Oikein! Nettotuotto on 10 000 € - 1 000 € = 9 000 € / v. 36 000 € / 9 000 € = 4,0 vuotta.' },
+              { text: '5,0 vuotta', correct: false, hint: 'Laske ensin vuotuinen nettotuotto (10 000 € - 1 000 €) ja jaa sitten 36 000 € sillä luvulla.' },
+              { text: '9,0 vuotta', correct: false, hint: '9 000 € on vuotuinen nettotuotto euroina, ei vuosien määrä. Kuinka monta vuotta tarvitaan 36 000 €:n kattamiseen?' }
+            ]
+          },
+          {
+            q: 'Käytetty puimuri maksaa 50 000 € ja sen vuotuinen nettotuotto on 8 000 €. Koneen arvioitu pitoaika ennen kallista remonttia on 5 vuotta. Kumpi on taloudellisesti viisaampaa?',
+            options: [
+              { text: 'Ostaa puimuri, koska 8 000 € vuodessa on selvä plussa', correct: false, hint: 'Laske 5 × 8 000 € = 40 000 €. Riittääkö se kattamaan 50 000 € hankintahinnan?' },
+              { text: 'Jatkaa urakointia, koska takaisinmaksuaika (6,25 v) ylittää 5 vuoden pitoajan', correct: true, hint: 'Juuri näin! 50 000 € / 8 000 € = 6,25 vuotta, joten kone ei ehdi maksaa itseään takaisin pitoaikana.' },
+              { text: 'Ostaa puimuri vain, jos huoltokulut lasketaan nollaksi', correct: false, hint: 'Käytetyn puimurin huoltokuluja ei voi olettaa nollaksi. Vertaa annettua nettotuottoa ja pitoaikaa.' },
+              { text: 'Pitoajalla ei ole merkitystä takaisinmaksuaikalaskennassa', correct: false, hint: 'Pitoaika on ratkaiseva: jos kone kuluu loppuun ennen nollapistettä, investointi jää tappiolle.' }
+            ]
+          },
+          {
+            q: 'Navetan aurinkovoimalan takaisinmaksuaika on 5,5 vuotta ja käyttöikä 20 vuotta. Miksi maatilayrittäjän pitää silti tarkistaa kassavirta ennen tilausta?',
+            options: [
+              { text: 'Sillä ei ole väliä, jos 20 vuoden kokonaistuotto on positiivinen', correct: false, hint: 'Kevään siemen- ja lannoiteostot on maksettava heti. Mitä tapahtuu, jos kassa tyhjenee jo 1. vuonna?' },
+              { text: 'Hankinta sitoo kassaa tai vaatii lainanhoitoa heti, vaikka säästöt kertyvät vasta vuosien aikana', correct: true, hint: 'Täysin oikein! Kannattavakin investointi voi aiheuttaa maksuvalmiuskriisin, jos rahoitusta ei soviteta kassasykliin.' },
+              { text: 'Koska takaisinmaksuaika ei saa ylittää 3 vuotta maataloudessa', correct: false, hint: 'Pitkäikäisissä energiainvestoinneissa 5–8 vuoden takaisinmaksuaika on hyvä, kunhan maksuvalmius kestää.' },
+              { text: 'Koska aurinkovoimalassa ei ole kiinteää hankintahintaa', correct: false, hint: 'Päinvastoin: aurinkovoimala on etupainotteinen investointi, jossa pääosa kustannuksesta syntyy heti alussa.' }
+            ]
+          }
+        ]
+      },
+      kahvila: {
+        id: 'kahvila',
+        name: 'Kahvila-leipomo (palveluala)',
+        subtitle: 'Arvioi laiteinvestoinnin kannattavuutta suhteessa leasingiin, huoltokuluihin ja käyttöikään.',
+        alternative_label: 'Harkitse leasingia',
+        items: [
+          { name: 'Espressokone', cost: 12000, saving: 6000, opex: 1200, years: 6 },
+          { name: 'Paistouuni', cost: 18000, saving: 7500, opex: 1500, years: 8 },
+          { name: 'Kylmävitriini', cost: 8000, saving: 3500, opex: 700, years: 7 },
+          { name: 'Terassilämmitys', cost: 15000, saving: 4000, opex: 1800, years: 5 }
+        ],
+        questions: [
+          {
+            q: 'Kahvila harkitsee 12 000 € espressokonetta. Se tuo 6 000 € lisäkatetta vuodessa, mutta huolto ja suodattimet maksavat 1 200 € vuodessa. Mikä on takaisinmaksuaika?',
+            options: [
+              { text: '2,0 vuotta', correct: false, hint: 'Jaoit 12 000 € suoraan 6 000 € lisäkatteella. Vähennä ensin vuotuinen 1 200 € huoltokulu.' },
+              { text: '2,5 vuotta', correct: true, hint: 'Oikein! Nettotuotto on 4 800 € / v, ja 12 000 € / 4 800 € = 2,5 vuotta.' },
+              { text: '4,0 vuotta', correct: false, hint: 'Vuotuinen nettotuotto on 4 800 €. Jaa 12 000 € sillä luvulla.' },
+              { text: '4,8 vuotta', correct: false, hint: '4 800 € on vuotuinen nettotuotto euroina, ei vuosien määrä.' }
+            ]
+          },
+          {
+            q: 'Terassilämmitys maksaa 15 000 € ja sen vuotuinen nettotuotto on 2 200 €. Vuokrasopimusta on jäljellä 5 vuotta. Kannattaako hankinta?',
+            options: [
+              { text: 'Kyllä, koska 2 200 € on positiivinen nettotuotto', correct: false, hint: 'Viidessä vuodessa kertyy 11 000 €, mikä ei riitä kattamaan 15 000 € hankintaa.' },
+              { text: 'Ei, koska takaisinmaksuaika (6,8 v) ylittää 5 vuoden vuokra-ajan', correct: true, hint: 'Juuri näin! Investointi ei ehdi maksaa itseään takaisin vuokra-aikana.' },
+              { text: 'Kyllä, jos sähkö lasketaan kiinteäksi kuluksi', correct: false, hint: 'Sähkökulu on jo huomioitu nettotuotossa; ongelma on liian lyhyt pitoaika.' },
+              { text: 'Vuokra-ajalla ei ole vaikutusta investointilaskentaan', correct: false, hint: 'Toimitilan vuokra-aika rajaa kiinteiden laiteinvestointien todellisen pitoajan.' }
+            ]
+          },
+          {
+            q: 'Miksi uuden kahvilayrittäjän kannattaa joskus valita laitteen leasing, vaikka ostaminen olisi 6 vuoden tähtäimellä hieman halvempaa?',
+            options: [
+              { text: 'Leasing ei maksa mitään ensimmäisenä vuonna', correct: false, hint: 'Leasingvuokraa maksetaan kuukausittain, mutta se ei sido koko hankintahintaa kerralla.' },
+              { text: 'Se säästää alkukassaa ja turvaa maksuvalmiuden käynnistysvaiheessa', correct: true, hint: 'Oikein! Alkuvaiheessa kassa tarvitaan raaka-aineisiin, markkinointiin ja puskuriin.' },
+              { text: 'Koska leasing-laitteet eivät koskaan tarvitse huoltoa', correct: false, hint: 'Pääsyy kassanhallinnassa on sitoutuvan pääoman pienentäminen.' },
+              { text: 'Koska ostettua laitetta ei voi kirjata kirjanpitoon', correct: false, hint: 'Ostettu laite kirjataan taseeseen ja poistetaan vuosittain; kyse on kassavirrasta.' }
+            ]
+          }
+        ]
+      }
+    };
+
+    const BUILTIN_S2 = {
+      en: { dir: 'ltr', terms: { cost: 'Initial investment (CapEx)', saving: 'Annual gross benefit', opex: 'Annual operating costs', years: 'Useful life (years)', payback: 'Payback period', net: 'Net annual cash flow', total: 'Total net gain', status: 'Recommendation', chart: 'Cumulative cash flow' } },
+      sv: { dir: 'ltr', terms: { cost: 'Anskaffningskostnad', saving: 'Årlig besparing / merintäkt', opex: 'Årliga driftskostnader', years: 'Ekonomisk livslängd (år)', payback: 'Återbetalningstid', net: 'Årligt nettokassaflöde', total: 'Total nettovinst', status: 'Rekommendation', chart: 'Ackumulerat kassaflöde' } },
+      uk: { dir: 'ltr', terms: { cost: 'Початкові інвестиції', saving: 'Річна економія / дохід', opex: 'Річні витрати на обслуговування', years: 'Строк використання (роки)', payback: 'Термін окупності', net: 'Чистий річний потік', total: 'Загальний чистий прибуток', status: 'Рекомендація', chart: 'Накопичений грошовий потік' } },
+      et: { dir: 'ltr', terms: { cost: 'Soetusmaksumus', saving: 'Aastane sääst / lisatulu', opex: 'Aastased hoolduskulud', years: 'Kasutusiga (aastat)', payback: 'Tasuvusaeg', net: 'Aastane netorahavoog', total: 'Kogu netokasum', status: 'Soovitus', chart: 'Kumulatiivne rahavoog' } },
+      ar: { dir: 'rtl', terms: { cost: 'تكلفة الاستثمار الأولية', saving: 'الوفورات أو الإيرادات السنوية', opex: 'تكاليف التشغيل والصيانة السنوية', years: 'العمر الإنتاجي (سنوات)', payback: 'فترة الاسترداد', net: 'صافي التدفق النقدي السنوي', total: 'إجمالي صافي الربح', status: 'التوصية', chart: 'التدفق النقدي التراكمي' } },
+      so: { dir: 'ltr', terms: { cost: 'Qiimaha maalgashiga', saving: 'Kaydka sanadlaha ah', opex: 'Kharashka dayactirka sanadlaha ah', years: 'Mudada isticmaalka (sano)', payback: 'Mudada soo celinta', net: 'Dakhliga saafiga ah sanadkii', total: 'Faa\'iidada saafiga ah ee guud', status: 'Talo-bixin', chart: 'Qulqulka lacagta ee mudada isticmaalka' } }
+    };
+
+    let activePreset = BUILTIN_PRESETS.maatila;
+    let s2Data = BUILTIN_S2;
+    let currentQ = 0;
+    let solved = [false, false, false];
+    let picked = [-1, -1, -1];
+
+    function fmtEur(n) {
+      return (n < 0 ? '-' : '') + Math.abs(Math.round(n)).toLocaleString('fi-FI') + ' €';
+    }
+    function fmtSignedEur(n) {
+      return (n > 0 ? '+' : (n < 0 ? '-' : '')) + Math.abs(Math.round(n)).toLocaleString('fi-FI') + ' €';
+    }
+
+    function switchTab(tab) {
+      const isSim = tab === 'sim';
+      document.getElementById('panel-sim').classList.toggle('hidden', !isSim);
+      document.getElementById('panel-quiz').classList.toggle('hidden', isSim);
+      document.getElementById('tab-sim').classList.toggle('active', isSim);
+      document.getElementById('tab-quiz').classList.toggle('active', !isSim);
+      document.getElementById('tab-sim').setAttribute('aria-selected', String(isSim));
+      document.getElementById('tab-quiz').setAttribute('aria-selected', String(!isSim));
+    }
+
+    function setS2Lang(lang) {
+      const entry = lang && s2Data[lang] ? s2Data[lang] : null;
+      document.querySelectorAll('[data-s2]').forEach(el => {
+        const key = el.getAttribute('data-s2');
+        if (entry && entry.terms[key]) {
+          el.textContent = entry.terms[key];
+          el.setAttribute('dir', entry.dir || 'ltr');
+        } else {
+          el.textContent = '';
+          el.removeAttribute('dir');
+        }
+      });
+    }
+
+    async function loadPreset(name) {
+      let data = BUILTIN_PRESETS[name] || BUILTIN_PRESETS.maatila;
+      if (location.protocol.startsWith('http')) {
+        try {
+          const res = await fetch(`./presets/${name}.json`);
+          if (res.ok) data = await res.json();
+        } catch (_) {}
+      }
+      activePreset = data;
+      document.getElementById('scenario-subtitle').textContent = activePreset.subtitle;
+      renderPresetButtons();
+      applyItem(0);
+
+      currentQ = 0;
+      solved = activePreset.questions.map(() => false);
+      picked = activePreset.questions.map(() => -1);
+      renderQuiz();
+    }
+
+    function renderPresetButtons() {
+      const wrap = document.getElementById('preset-buttons');
+      wrap.innerHTML = activePreset.items.map((it, idx) => `
+        <button type="button" class="preset-btn ${idx === 0 ? 'active' : ''}" onclick="applyItem(${idx})">
+          <div class="preset-name">${it.name}</div>
+          <div class="preset-meta">${fmtEur(it.cost)} · ${it.years} v</div>
+        </button>
+      `).join('');
+    }
+
+    function applyItem(idx) {
+      const it = activePreset.items[idx];
+      document.getElementById('in-cost').value = it.cost;
+      document.getElementById('in-saving').value = it.saving;
+      document.getElementById('in-opex').value = it.opex;
+      document.getElementById('in-years').value = it.years;
+      document.querySelectorAll('.preset-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+      updateSim();
+    }
+
+    function updateSim() {
+      const cost = Number(document.getElementById('in-cost').value);
+      const saving = Number(document.getElementById('in-saving').value);
+      const opex = Number(document.getElementById('in-opex').value);
+      const years = Number(document.getElementById('in-years').value);
+
+      document.getElementById('val-cost').textContent = fmtEur(cost);
+      document.getElementById('val-saving').textContent = fmtEur(saving);
+      document.getElementById('val-opex').textContent = fmtEur(opex);
+      document.getElementById('val-years').textContent = years + ' v';
+
+      const net = saving - opex;
+      const total = (net * years) - cost;
+
+      const paybackEl = document.getElementById('kpi-payback');
+      const netEl = document.getElementById('kpi-net');
+      const totalEl = document.getElementById('kpi-total');
+      const statusEl = document.getElementById('kpi-status');
+      const capEl = document.getElementById('chart-caption');
+
+      netEl.textContent = fmtSignedEur(net);
+      netEl.style.color = net > 0 ? 'var(--text)' : 'var(--error)';
+      totalEl.textContent = fmtSignedEur(total);
+      totalEl.style.color = total > 0 ? 'var(--success)' : 'var(--error)';
+
+      let payback = Infinity;
+      if (net > 0) {
+        payback = cost / net;
+        paybackEl.textContent = payback.toFixed(1).replace('.', ',') + ' v';
+        capEl.textContent = payback <= years
+          ? 'Nollapiste: vuosi ' + payback.toFixed(1).replace('.', ',')
+          : 'Ei saavuta nollapistettä ' + years + ' vuodessa';
+      } else {
+        paybackEl.textContent = 'Ei koskaan';
+        capEl.textContent = 'Käyttökulut ylittävät säästön';
+      }
+
+      if (net <= 0 || payback > years) {
+        statusEl.textContent = activePreset.alternative_label || 'Ei kannattava';
+        statusEl.style.color = 'var(--error)';
+        paybackEl.style.color = 'var(--error)';
+      } else if (payback <= years * 0.65) {
+        statusEl.textContent = 'Kannattava hankinta';
+        statusEl.style.color = 'var(--success)';
+        paybackEl.style.color = 'var(--success)';
+      } else {
+        statusEl.textContent = 'Rajatapaus (korkea riski)';
+        statusEl.style.color = 'var(--warning)';
+        paybackEl.style.color = 'var(--warning)';
+      }
+
+      const vals = [];
+      for (let y = 0; y <= years; y++) vals.push((net * y) - cost);
+      const maxAbs = Math.max(cost, ...vals.map(Math.abs), 1);
+
+      const bars = document.getElementById('bars');
+      bars.style.gridTemplateColumns = `repeat(${years + 1}, minmax(0, 1fr))`;
+      bars.innerHTML = vals.map((v, y) => {
+        const pct = Math.max(8, Math.round((Math.abs(v) / maxAbs) * 100));
+        const col = v >= 0 ? '#166534' : '#b91c1c';
+        return `
+          <div class="bar-col" title="Vuosi ${y}: ${fmtSignedEur(v)}">
+            <div class="bar-track">
+              <div class="bar-fill" style="height:${pct}%; background:${col};"></div>
+            </div>
+            <span class="bar-lbl mono">V${y}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderQuiz() {
+      const qs = activePreset.questions;
+      const item = qs[currentQ];
+      document.getElementById('quiz-step').textContent = `Haaste ${currentQ + 1} / ${qs.length}`;
+      document.getElementById('quiz-q').textContent = item.q;
+
+      document.getElementById('quiz-opts').innerHTML = item.options.map((opt, idx) => {
+        let cls = 'opt-btn';
+        if (picked[currentQ] === idx) cls += opt.correct ? ' correct' : ' wrong';
+        return `<button type="button" class="${cls}" onclick="pickOpt(${idx})">${opt.text}</button>`;
+      }).join('');
+
+      const fb = document.getElementById('quiz-fb');
+      if (picked[currentQ] >= 0) {
+        const chosen = item.options[picked[currentQ]];
+        fb.classList.remove('hidden');
+        fb.textContent = chosen.hint;
+        fb.style.borderColor = chosen.correct ? 'var(--success)' : 'var(--warning)';
+        fb.style.background = chosen.correct ? 'var(--success-bg)' : 'var(--warning-bg)';
+      } else {
+        fb.classList.add('hidden');
+      }
+
+      document.getElementById('btn-prev').disabled = currentQ === 0;
+      document.getElementById('btn-next').disabled = currentQ === qs.length - 1;
+      const count = solved.filter(Boolean).length;
+      document.getElementById('quiz-badge').textContent = `${count}/${qs.length}`;
+      document.getElementById('quiz-done').classList.toggle('hidden', count < qs.length);
+    }
+
+    function pickOpt(idx) {
+      picked[currentQ] = idx;
+      if (activePreset.questions[currentQ].options[idx].correct) solved[currentQ] = true;
+      renderQuiz();
+    }
+
+    function moveQuiz(delta) {
+      const next = currentQ + delta;
+      if (next >= 0 && next < activePreset.questions.length) {
+        currentQ = next;
+        renderQuiz();
+      }
+    }
+
+    // Käynnistys + URL-parametrien tuki (?preset=kahvila&s2=ar)
+    (async function init() {
+      if (location.protocol.startsWith('http')) {
+        try {
+          const res = await fetch('./i18n/s2_bundle.json');
+          if (res.ok) s2Data = await res.json();
+        } catch (_) {}
+      }
+      const params = new URLSearchParams(location.search);
+      const preset = params.get('preset') || 'maatila';
+      const s2 = params.get('s2') || '';
+      document.getElementById('preset-select').value = BUILTIN_PRESETS[preset] ? preset : 'maatila';
+      document.getElementById('s2-select').value = s2;
+      await loadPreset(document.getElementById('preset-select').value);
+      setS2Lang(s2);
+    })();
+  </script>
+</body>
+</html>

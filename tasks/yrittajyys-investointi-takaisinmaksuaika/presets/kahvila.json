@@ -1,0 +1,41 @@
+{
+  "id": "kahvila",
+  "name": "Kahvila-leipomo (palveluala)",
+  "subtitle": "Arvioi laiteinvestoinnin kannattavuutta suhteessa leasingiin, huoltokuluihin ja käyttöikään.",
+  "alternative_label": "Harkitse leasingia",
+  "items": [
+    { "name": "Espressokone", "cost": 12000, "saving": 6000, "opex": 1200, "years": 6 },
+    { "name": "Paistouuni", "cost": 18000, "saving": 7500, "opex": 1500, "years": 8 },
+    { "name": "Kylmävitriini", "cost": 8000, "saving": 3500, "opex": 700, "years": 7 },
+    { "name": "Terassilämmitys", "cost": 15000, "saving": 4000, "opex": 1800, "years": 5 }
+  ],
+  "questions": [
+    {
+      "q": "Kahvila harkitsee 12 000 € espressokonetta. Se tuo erikoiskahveista 6 000 € lisäkatetta vuodessa, mutta huolto ja suodattimet maksavat 1 200 € vuodessa. Mikä on takaisinmaksuaika?",
+      "options": [
+        { "text": "2,0 vuotta", "correct": false, "hint": "Jaoit 12 000 € suoraan 6 000 € lisäkatteella. Vähennä ensin vuotuinen 1 200 € huoltokulu saadaksesi nettotuoton." },
+        { "text": "2,5 vuotta", "correct": true, "hint": "Oikein! Nettotuotto on 6 000 € - 1 200 € = 4 800 € / v. 12 000 € / 4 800 € = 2,5 vuotta." },
+        { "text": "4,0 vuotta", "correct": false, "hint": "Tarkista jakolasku: vuotuinen nettotuotto on 4 800 €. Kuinka monta kertaa 4 800 € mahtuu 12 000 €:oon?" },
+        { "text": "4,8 vuotta", "correct": false, "hint": "4 800 € on vuotuinen nettotuotto euroina, ei vuosien määrä. Jaa hankintahinta 12 000 € tällä luvulla." }
+      ]
+    },
+    {
+      "q": "Terassilämmitys maksaa 15 000 € ja sen vuotuinen nettotuotto on 2 200 €. Vuokrasopimusta on jäljellä 5 vuotta. Kannattaako hankinta?",
+      "options": [
+        { "text": "Kyllä, koska 2 200 € on positiivinen nettotuotto", "correct": false, "hint": "Laske paljonko 2 200 € tuottaa 5 vuodessa (5 × 2 200 € = 11 000 €). Riittääkö se kattamaan 15 000 € hankinnan?" },
+        { "text": "Ei, koska takaisinmaksuaika (6,8 v) ylittää 5 vuoden vuokra-ajan", "correct": true, "hint": "Juuri näin! Investointi ei ehdi maksaa itseään takaisin ennen vuokrasopimuksen päättymistä." },
+        { "text": "Kyllä, jos sähkö lasketaan kiinteäksi kuluksi", "correct": false, "hint": "Sähkökulu on jo huomioitu 2 200 € nettotuotossa. Ongelma on liian lyhyt pitoaika suhteessa hankintahintaan." },
+        { "text": "Vuokra-ajan pituudella ei ole vaikutusta investointilaskentaan", "correct": false, "hint": "Toimitilan vuokra-aika rajaa usein kiinteiden laiteinvestointien todellisen pitoajan." }
+      ]
+    },
+    {
+      "q": "Miksi uuden kahvilayrittäjän kannattaa joskus valita laitteen leasing, vaikka ostaminen olisi 6 vuoden tähtäimellä hieman halvempaa?",
+      "options": [
+        { "text": "Leasing ei maksa mitään ensimmäisenä vuonna", "correct": false, "hint": "Leasingvuokraa maksetaan heti kuukausittain, mutta se ei sido koko hankintahintaa kerralla." },
+        { "text": "Se säästää alkukassaa ja turvaa maksuvalmiuden yrityksen käynnistysvaiheessa", "correct": true, "hint": "Oikein! Alkuvaiheessa kassa tarvitaan raaka-aineisiin, markkinointiin ja puskuriin." },
+        { "text": "Koska leasing-laitteet eivät koskaan tarvitse huoltoa", "correct": false, "hint": "Huolto voi sisältyä sopimukseen lisämaksusta, mutta pääsyy kassanhallinnassa on sitoutuvan pääoman pienentäminen." },
+        { "text": "Koska ostettua laitetta ei voi kirjata kirjanpitoon", "correct": false, "hint": "Ostettu laite kirjataan taseeseen ja poistetaan vuosittain. Kyse on ensisijaisesti kassavirrasta." }
+      ]
+    }
+  ]
+}

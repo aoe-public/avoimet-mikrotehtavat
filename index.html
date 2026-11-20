@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Avoin mikrotehtäväkirjasto – Opettajaportaali</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #cbd5e1;
+      --text: #0f172a;
+      --muted: #475569;
+      --primary: #1e4d3b;
+      --primary-hover: #163a2c;
+      --primary-text: #ffffff;
+      --accent-bg: #f0fdf4;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px 16px 40px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 1020px;
+      margin: 0 auto;
+    }
+    header {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.45rem;
+      color: var(--text);
+    }
+    .lead {
+      margin: 6px 0 0;
+      color: var(--muted);
+      max-width: 72ch;
+    }
+    .meta-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .badge {
+      font-size: 0.78rem;
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .toolbar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .field label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    select {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
+      color: var(--text);
+      font-size: 0.85rem;
+    }
+    .task-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .task-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .task-title {
+      margin: 0;
+      font-size: 1.15rem;
+    }
+    .task-summary {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0;
+    }
+    .btn {
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.84rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+    .btn:hover { border-color: var(--primary); }
+    .btn-primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--primary-text);
+    }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .status-msg {
+      font-size: 0.82rem;
+      color: var(--primary);
+      font-weight: 600;
+      min-height: 1.2em;
+      margin-bottom: 8px;
+    }
+    .embed-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.78rem;
+      color: var(--text);
+      overflow-x: auto;
+      white-space: nowrap;
+      margin-bottom: 14px;
+    }
+    .preview-frame {
+      width: 100%;
+      height: 760px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+    }
+    footer {
+      margin-top: 20px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--primary); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Avoin mikrotehtäväkirjasto</h1>
+      <p class="lead">
+        Maksuttomia, saavutettavia ja selainpohjaisia oppimistehtäviä toiselle asteelle, ammattikorkeakouluihin ja aikuiskoulutukseen.
+        Kokeile tehtävää alla, valitse toimialaskenaario ja S2-tukikieli, ja kopioi valmis upotuskoodi Moodleen tai Priimaan.
+      </p>
+      <div class="meta-badges">
+        <span class="badge">Lisenssi: CC BY 4.0 / MIT</span>
+        <span class="badge">Ei kirjautumista · Zero PII</span>
+        <span class="badge">WCAG 2.1 AA</span>
+        <span class="badge">S2-kielituki (ml. RTL)</span>
+      </div>
+    </header>
+
+    <section class="toolbar" aria-label="Tehtävän ja kielen valinta">
+      <div class="field">
+        <label for="sel-task">Mikrotehtävä</label>
+        <select id="sel-task" onchange="onSelectionChange()"></select>
+      </div>
+      <div class="field">
+        <label for="sel-preset">Toimialaskenaario</label>
+        <select id="sel-preset" onchange="onSelectionChange()"></select>
+      </div>
+      <div class="field">
+        <label for="sel-s2">S2-tukikieli (oletus opiskelijalle)</label>
+        <select id="sel-s2" onchange="onSelectionChange()">
+          <option value="">Ei oletuskieltä (opiskelija valitsee itse)</option>
+          <option value="en">Englanti (English)</option>
+          <option value="sv">Ruotsi (Svenska)</option>
+          <option value="uk">Ukraina (Українська)</option>
+          <option value="et">Viro (Eesti)</option>
+          <option value="ar">Arabia (العربية – RTL)</option>
+          <option value="so">Somali (Soomaali)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="sel-level">Suodata oppiaste</label>
+        <select id="sel-level" onchange="filterTasks()">
+          <option value="">Kaikki oppiasteet</option>
+          <option value="toinen_aste_pt">Toinen aste (PT)</option>
+          <option value="at_eat">Ammatti- ja erikoisammattitutkinnot (AT/EAT)</option>
+          <option value="amk">Ammattikorkeakoulu (AMK)</option>
+        </select>
+      </div>
+    </section>
+
+    <main id="task-view" class="task-card">
+      <div class="task-head">
+        <div>
+          <h2 id="task-title" class="task-title"></h2>
+          <p id="task-summary" class="task-summary"></p>
+        </div>
+        <div id="task-tags" class="meta-badges" style="margin-top:0;"></div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn btn-primary" onclick="copyIframe()">Kopioi upotuskoodi (&lt;iframe&gt;)</button>
+        <button type="button" class="btn" onclick="copyDirectLink()">Kopioi suora linkki opiskelijalle</button>
+        <a id="btn-open" class="btn" target="_blank" rel="noopener">Avaa uuteen välilehteen</a>
+        <a id="btn-download" class="btn" download="mikrotehtava.html">Lataa HTML-tiedosto</a>
+      </div>
+
+      <div id="status-msg" class="status-msg" role="status" aria-live="polite"></div>
+      <div id="embed-code" class="embed-box" aria-label="Upotuskoodi"></div>
+
+      <iframe id="preview-frame" class="preview-frame" title="Mikrotehtävän esikatselu"></iframe>
+    </main>
+
+    <footer>
+      <span>Avoin mikrotehtäväkirjasto (OER) · Yhteensopiva aoe.fi-palvelun kanssa</span>
+      <span>
+        Tekoälyagenteille: <a href="./catalog.json">catalog.json</a> · <a href="./llms.txt">llms.txt</a>
+      </span>
+    </footer>
+  </div>
+
+  <script>
+    const FALLBACK_CATALOG = {
+      tasks: [
+        {
+          id: 'yrittajyys-investointi-takaisinmaksuaika',
+          title: 'Investointilaskenta ja takaisinmaksuaika',
+          summary: '2-välilehtinen simulaattori ja sokraattinen haastekoe investoinnin takaisinmaksuajan, pitoajan ja kassavirran arviointiin.',
+          education_levels: ['toinen_aste_pt', 'at_eat', 'amk'],
+          subjects: ['yrittajyys', 'liiketoiminta', 'alkutuotanto'],
+          difficulty_levels: ['T1', 'H3', 'K5'],
+          presets: ['maatila', 'kahvila'],
+          widget_path: 'tasks/yrittajyys-investointi-takaisinmaksuaika/widget.html'
+        }
+      ]
+    };
+
+    const PRESET_LABELS = {
+      maatila: 'Maatila (ruoan alkutuotanto)',
+      kahvila: 'Kahvila-leipomo (palveluala)'
+    };
+
+    let catalog = FALLBACK_CATALOG;
+    let filteredTasks = catalog.tasks;
+
+    function getAbsoluteUrl(relativePath, preset, s2) {
+      const url = new URL(relativePath, window.location.href);
+      if (preset) url.searchParams.set('preset', preset);
+      if (s2) url.searchParams.set('s2', s2);
+      return url.href;
+    }
+
+    function filterTasks() {
+      const level = document.getElementById('sel-level').value;
+      filteredTasks = level
+        ? catalog.tasks.filter(t => (t.education_levels || []).includes(level))
+        : catalog.tasks;
+
+      const selTask = document.getElementById('sel-task');
+      selTask.innerHTML = filteredTasks.map((t, i) =>
+        `<option value="${i}">${t.title}</option>`
+      ).join('');
+      onSelectionChange();
+    }
+
+    function onSelectionChange() {
+      const idx = Number(document.getElementById('sel-task').value) || 0;
+      const task = filteredTasks[idx] || catalog.tasks[0];
+      if (!task) return;
+
+      const selPreset = document.getElementById('sel-preset');
+      const currentPreset = selPreset.value;
+      const presets = task.presets || ['maatila'];
+      selPreset.innerHTML = presets.map(p =>
+        `<option value="${p}">${PRESET_LABELS[p] || p}</option>`
+      ).join('');
+      if (presets.includes(currentPreset)) selPreset.value = currentPreset;
+
+      const preset = selPreset.value;
+      const s2 = document.getElementById('sel-s2').value;
+      const fullUrl = getAbsoluteUrl(task.widget_path, preset, s2);
+      const iframeHtml = `<iframe src="${fullUrl}" width="100%" height="780" style="border:0;border-radius:8px;" title="${task.title}"></iframe>`;
+
+      document.getElementById('task-title').textContent = task.title;
+      document.getElementById('task-summary').textContent = task.summary;
+      document.getElementById('task-tags').innerHTML = (task.difficulty_levels || [])
+        .map(d => `<span class="badge">${d}</span>`).join('');
+
+      document.getElementById('embed-code').textContent = iframeHtml;
+      document.getElementById('preview-frame').src = fullUrl;
+      document.getElementById('btn-open').href = fullUrl;
+      document.getElementById('btn-download').href = task.widget_path;
+      document.getElementById('btn-download').setAttribute('download', `${task.id}.html`);
+      document.getElementById('status-msg').textContent = '';
+    }
+
+    async function copyText(text, label) {
+      try {
+        await navigator.clipboard.writeText(text);
+        document.getElementById('status-msg').textContent = `${label} kopioitu leikepöydälle.`;
+      } catch (_) {
+        document.getElementById('status-msg').textContent = 'Kopioi teksti yllä olevasta laatikosta (Ctrl+C).';
+      }
+    }
+
+    function copyIframe() {
+      copyText(document.getElementById('embed-code').textContent, 'Upotuskoodi (<iframe>)');
+    }
+
+    function copyDirectLink() {
+      copyText(document.getElementById('btn-open').href, 'Suora opiskelijalinkki');
+    }
+
+    (async function init() {
+      if (location.protocol.startsWith('http')) {
+        try {
+          const res = await fetch('./catalog.json');
+          if (res.ok) catalog = await res.json();
+        } catch (_) {}
+      }
+      filterTasks();
+    })();
+  </script>
+</body>
+</html>

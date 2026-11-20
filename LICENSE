@@ -1,16 +1,6 @@
-# Lisenssi / License
+MIT License
 
-Tämä repositorio käyttää kaksoislisenssiä (avoin lähdekoodi + avoimet oppimateriaalit, yhteensopiva aoe.fi-kirjaston kanssa):
-
-1. **Lähdekoodi (HTML, CSS, JavaScript, skriptit):** MIT-lisenssi
-2. **Oppimateriaalit, tehtävätekstit, skenaariot ja sanastot (`tasks/*/presets/*`, `tasks/*/i18n/*`):** Creative Commons Nimeä 4.0 Kansainvälinen (CC BY 4.0) — https://creativecommons.org/licenses/by/4.0/deed.fi
-3. **Metatiedot (`catalog.json`, `manifest.json`):** CC0 1.0 Yleismaailmallinen (Public Domain)
-
----
-
-## MIT License (Code)
-
-Copyright (c) 2026 Avoin mikrotehtäväkirjasto -tekijät
+Copyright (c) 2026 Avoimet mikrotehtävät -tekijät
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
